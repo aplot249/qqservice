@@ -17,7 +17,7 @@
 4. 前端运行的问题：
 * 用`npm run build` 进行打包，生成dist目录。
 * 配置NGINX的虚拟主机，类似如下：
-`
+```
 server {
 	listen 80;
 	listen [::]:80;
@@ -28,5 +28,4 @@ server {
 	}
 	error_page  404 403 500 502 503 504  /index.html;
 }
-
-`
+```
