@@ -1,4 +1,5 @@
 server:
+  # 这是修改后端启动的端口号
   port: 6060
 
 # mysql
@@ -7,10 +8,13 @@ spring:
     #MySQL配置
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/qqservice?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    # 这是数据库用户名
     username: root
+    # 这是数据库密码
     password: abd6bbb9cf62a9c8
   # redis配置，以下有默认配置的也可以使用默认配置
   redis:
+    # 这是redis所在主机的ip，如果在本机，就写127.0.0.1
     host: 124.223.65.148
     port: 6379
     password:

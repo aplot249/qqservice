@@ -7,6 +7,7 @@ const service = axios.create({
     // baseURL: 'http://127.0.0.1:6060',
     timeout: 15000 // 请求超时时间
 })
+
 // http request 拦截器
 service.interceptors.request.use(
     config => {
