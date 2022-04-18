@@ -1,0 +1,42 @@
+server:
+  port: 6060
+
+# mysql
+spring:
+  datasource:
+    #MySQL配置
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/qqservice?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: abd6bbb9cf62a9c8
+  # redis配置，以下有默认配置的也可以使用默认配置
+  redis:
+    host: 124.223.65.148
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: -1
+        max-wait: -1
+        max-idle: -1
+        min-idle: -1
+    lettuce:
+      shutdown-timeout: 5000ms
+
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  # 配置Mybatis数据返回类型别名（默认别名为类名）
+  type-aliases-package: com.qqservice.system.entity
+  global-config:
+    db-config:
+      id-type: auto # 序列化id
+  configuration:
+    # 自动驼峰命名
+    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
+#配置控制台打印日志Debug
+#logging:
+#  level:
+#    com.jd.mapper: debug

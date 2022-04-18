@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qqservice.system.dao.SiteDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.qqservice.system.entity.SiteEntity" id="siteMap">
+        <result property="id" column="id"/>
+        <result property="sitename" column="siteName"/>
+        <result property="siteicon" column="siteIcon"/>
+        <result property="filingno" column="filingNo"/>
+        <result property="enablesite" column="enableSite"/>
+        <result property="closinginstructions" column="ClosingInstructions"/>
+        <result property="value1" column="value1"/>
+        <result property="value2" column="value2"/>
+        <result property="value3" column="value3"/>
+        <result property="value4" column="value4"/>
+    </resultMap>
+
+
+</mapper>
