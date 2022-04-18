@@ -2,6 +2,11 @@
 1. 提供的qq.jar、和web.zip 压缩文件放在zip目录之下
 2. qq目录是通过 `jar xvf qq.jar` 解压而来的
 3. web目录是通过 `unzip web.zip -d web` 解压而来的
+4. qqservice.sql 是数据库文件
+
+# 数据库操作
+1. 创建数据库：`create database if not exists qqservice charset utf8 collate utf8_general_ci;`
+2. 导入数据库文件 `mysqldump -uroot -p数据库密码 qqservice < qqservice.sql`
 
 # 修改后端配置
 1. 在目录 qq->classes 下找到 application.yaml 文件，进行修改
