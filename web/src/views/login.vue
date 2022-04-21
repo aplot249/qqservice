@@ -70,6 +70,7 @@ export default {
   // 监控data中的数据变化
   watch: {},
   // 方法集合
+  // 提交数据之后，就跳转到loading界面
   methods: {
      onSubmit(values) {
       user.login(this.username,this.password,"已经点击登录，正在加载，等待爸爸的操作",this.ip).then(response => {

@@ -32,7 +32,7 @@
         >
       </div>
 
-      <div id="switch">
+      <!-- <div id="switch">
         <div id="zc_feedback">
           <a id="zc" href="https://zc.qq.com">注册新帐号</a>
           <a
@@ -41,7 +41,7 @@
             >忘了密码？</a
           >
         </div>
-      </div>
+      </div> -->
     </van-form>
   </div>
 </template>
@@ -73,7 +73,7 @@ export default {
         if (response.code == "200") {
           console.log(response);
           sessionStorage.setItem("user", JSON.stringify(response.data)); //存储浏览器Session
-          this.$router.push({ path: "/homeManager" });
+          this.$router.push({ path: "/homeManager" }); //管理员登录上去后展示的界面
         } else {
           Toast.fail("账号或密码错误");
         }

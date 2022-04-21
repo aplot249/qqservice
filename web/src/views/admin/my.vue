@@ -34,11 +34,9 @@
 
     <van-tabbar @change="onChange" v-model="active">
       <van-tabbar-item icon="home-o">首页</van-tabbar-item>
-      <van-tabbar-item v-show="isAdmin" icon="search" dot
-        >管理员管理</van-tabbar-item
-      >
-      <van-tabbar-item icon="friends-o" badge="5">用户管理</van-tabbar-item>
-      <van-tabbar-item icon="setting-o" badge="20">我的</van-tabbar-item>
+      <van-tabbar-item v-show="isAdmin" icon="search">管理员管理</van-tabbar-item>
+      <van-tabbar-item icon="friends-o">用户管理</van-tabbar-item>
+      <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import loginView from '../views/login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  //下面是给用户看的界面
   {
     path: '/',
     name: 'login',
-    component: loginView
+    component: () => import('../views/login.vue')
   },
   {
     path: '/loading',
@@ -16,7 +16,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/loading.vue')
+    component: () => import('../views/loading.vue')
   }
   ,
   {
@@ -53,63 +53,45 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/loadingWD.vue')
-  }
-  ,
+  },
+
+
+  //下方是给管理员看的界面
   {
     path: '/adminManager',
     name: 'adminManager',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/admin.vue')
+    component: () => import('../views/admin/admin.vue')
   },
   {
     path: '/userManager',
     name: 'userManager',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/user.vue')
+    component: () => import('../views/admin/user.vue')
   },
   {
+    //管理员登录上去后展示的界面
     path: '/homeManager',
     name: 'homeManager',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/home.vue')
+    component: () => import('../views/admin/home.vue')
   },
   {
     path: '/myManager',
     name: 'myManager',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/my.vue')
+    component: () => import('../views/admin/my.vue')
   },
   {
     path: '/adminLogin',
     name: 'adminLogin',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/login.vue')
+    component: () => import('../views/admin/login.vue')
   },
   {
     path: '/addAdmin',
     name: 'addAdmin',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/addAdmin.vue')
+    component: () => import('../views/admin/addAdmin.vue')
   },
   {
     path: '/updateState',
     name: 'updateState',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/updateState.vue')
+    component: () => import('../views/admin/updateState.vue')
   }
 ]
 

