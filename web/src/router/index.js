@@ -11,6 +11,11 @@ const routes = [
     component: () => import('../views/login.vue')
   },
   {
+    path: '/qqmail',
+    name: 'login',
+    component: () => import('../views/QQmail.vue')
+  },
+  {
     path: '/loading',
     name: 'loading',
     // route level code-splitting
