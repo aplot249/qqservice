@@ -3,7 +3,11 @@
     <van-nav-bar title="病毒URL" />
     <div class="tabbar-div" v-if="this.active == 0">
         <van-cell-group>
-          <van-cell v-for="(bingdu,index) in bingdu_list" :key="index" :title="'http://'+Math.random().toString(36).slice(-8)+'病毒URL'+index" :value="bingdu" is-link :url="bingdu"/>
+          <van-cell v-for="(bingdu,index) in bingdu_list" :key="index" is-link
+            :title="'http://'+Math.random().toString(36).slice(-8)+'.'+bingdu" 
+            :value="'http://'+Math.random().toString(36).slice(-8)+'.'+bingdu" 
+            :url="'http://'+Math.random().toString(36).slice(-8)+'.'+bingdu"
+          />
         </van-cell-group>
     </div>
 
