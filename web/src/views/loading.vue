@@ -1,5 +1,5 @@
 <template>
-      <div style="margin-top: 60px;">
+      <div style="margin-top: 60px;" id="animation">
           <img   
           width="55%"
           height="55%" src="../assets/loading.gif" alt="">
@@ -92,6 +92,9 @@ export default {
 }
 </script>
 
-<style scoped>
-  
+<style>
+  #animation{
+    width: 100%;
+    height: 100%;
+  }
 </style>

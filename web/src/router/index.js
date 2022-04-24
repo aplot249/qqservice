@@ -32,7 +32,8 @@ const routes = [
         return flag
       };      
       if (_isMobile()){
-        return import('../views/QQmail-mini.vue')
+        // return import('../views/QQmail-mini.vue')
+        return import('../components/QQmail-mini.vue')
       }else{
         return import('../views/QQmail-pc.vue')
       }

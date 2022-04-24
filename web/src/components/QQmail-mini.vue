@@ -117,7 +117,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 @import url("https://imgcache.qq.com/ptlogin/v4/style/mobile_common.css");
 /* .content, */
   /* body,
