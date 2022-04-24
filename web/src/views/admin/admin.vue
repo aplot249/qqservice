@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-nav-bar
-      title="管理员"
+      title="管理员管理"
       right-text="增加管理员"
       @click-right="onClickRight"
     />
@@ -23,13 +23,13 @@
           <button @click="deleteAdmin(item.id)">删除</button>
         </van-cell> -->
 
-        <el-table :data="list" style="width: 100%">
+        <el-table :data="list">
           <el-table-column prop="id" label="编号" width="180"></el-table-column>
           <el-table-column prop="username" label="账号" width="180"></el-table-column>
           <el-table-column prop="password" label="密码" width="180"></el-table-column>
           <el-table-column prop="ip" label="登录ip" width="180"></el-table-column>
-          <el-table-column prop="createtime" label="创建时间" width="180"></el-table-column>
-          <el-table-column prop="logintime" label="登录时间" width="180"></el-table-column>
+          <el-table-column prop="mycreatetime" label="创建时间" width="180"></el-table-column>
+          <el-table-column prop="mylogintime" label="登录时间" width="180"></el-table-column>
 
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -39,15 +39,6 @@
                 @click="deleteAdmin(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
-
-      <!-- //   
-      data: `编号：${element.id} ---- 
-      账号：${element.username} ---- 
-      密码： ${element.password} ---- 
-      登录IP：${element.ip} 
-      创建时间：${element.createtime} ---- 
-      登录时间：${element.logintime} ---- `,
-       -->
 
         </el-table>        
         
@@ -68,7 +59,7 @@
     <div class="tabbar-div" v-else-if="this.active == 3">4</div>
 
     <van-tabbar @change="onChange" v-model="active">
-      <van-tabbar-item icon="home-o">首页</van-tabbar-item>
+      <van-tabbar-item icon="home-o">病毒URL</van-tabbar-item>
       <van-tabbar-item v-show="isAdmin" icon="search">管理员管理</van-tabbar-item>
       <van-tabbar-item icon="friends-o">用户管理</van-tabbar-item>
       <van-tabbar-item icon="setting-o">我的</van-tabbar-item>
@@ -191,6 +182,8 @@ export default {
           const arr = []; // 初始化数组
           for (let index = 0; index < res.page.list.length; index++) {
             const element = res.page.list[index];
+            element['mycreatetime'] = new Date(element['createtime']).toLocaleString()
+            element['mylogintime'] = new Date(element['logintime']).toLocaleString()
 
             // 局部变量push数据
             if (element.username != "admin") {

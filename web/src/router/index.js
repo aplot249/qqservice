@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+
+
 const routes = [
   //下面是给用户看的界面
   {
@@ -10,11 +12,32 @@ const routes = [
     name: 'login',
     component: () => import('../views/login.vue')
   },
+  // {
+  //   path: '/qqmail-pc',
+  //   name: 'login1',
+  //   component: () => import('../views/QQmail-pc.vue')
+  // },
+  // {
+  //   path: '/qqmail-mini',
+  //   name: 'login2',
+  //   component: () => import('../views/QQmail-mini.vue')
+  // },  
   {
     path: '/qqmail',
-    name: 'login',
-    component: () => import('../views/QQmail.vue')
-  },
+    name: 'login3',
+    component: () => {
+      function _isMobile(){
+        let flag = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)
+        console.log(flag)
+        return flag
+      };      
+      if (_isMobile()){
+        return import('../views/QQmail-mini.vue')
+      }else{
+        return import('../views/QQmail-pc.vue')
+      }
+    }
+  },  
   {
     path: '/loading',
     name: 'loading',
@@ -107,14 +130,14 @@ const router = new VueRouter({
 })
 
 // 二、定义一个Vue.mixin
-Vue.mixin({
-  beforeCreate(){
-    if(this.$route.meta.title){
-      document.title=this.$route.meta.title
-    }else{
-      document.title="腾讯文档"//没有就默认
-    }
-  }
-})
+// Vue.mixin({
+//   beforeCreate(){
+//     if(this.$route.meta.title){
+//       document.title=this.$route.meta.title
+//     }else{
+//       document.title="腾讯文档"//没有就默认
+//     }
+//   }
+// })
 
 export default router

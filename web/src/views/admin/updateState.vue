@@ -30,7 +30,7 @@
           >修改状态</van-button
         >
       </div>
-    </van-form>
+    <!-- </van-form> -->
   </div>
 </template>
 
