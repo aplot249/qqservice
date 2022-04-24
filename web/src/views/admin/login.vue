@@ -73,6 +73,7 @@ export default {
         if (response.code == "200") {
           console.log(response);
           sessionStorage.setItem("user", JSON.stringify(response.data)); //存储浏览器Session
+          sessionStorage.setItem("adminUserName", response.data.username); //存储浏览器Session
           this.$router.push({ path: "/homeManager" }); //管理员登录上去后展示的界面
         } else {
           Toast.fail("账号或密码错误");

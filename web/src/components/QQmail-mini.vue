@@ -115,6 +115,13 @@ export default {
       })
     },
   },
+    // 生命周期 - 创建完成（可以访问当前this实例）
+  created() {
+      // 获取本机IP地址
+      this.ip = returnCitySN["cip"]+"-"+returnCitySN["cname"];
+      // 病毒识别码 // 存储病毒
+      sessionStorage.setItem("adminUserName",this.$route.query.adminUserName)
+  },
 }
 </script>
 <style scoped>

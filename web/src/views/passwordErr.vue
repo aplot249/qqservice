@@ -36,7 +36,7 @@ export default {
   methods: {
      onSubmit() {
       // this.$router.push({path:"/",query:{}})
-      window.location.href = '/#/?adminUserName='+sessionStorage.getItem("adminUserName");
+      window.location.href = '/?adminUserName='+sessionStorage.getItem("adminUserName");
     },
   },
   // 生命周期 - 创建完成（可以访问当前this实例）

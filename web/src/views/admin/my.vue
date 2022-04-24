@@ -64,25 +64,26 @@ export default {
       // 生产病毒URL
       site.getSiteInfo().then((res) => {
         const logInfo = JSON.parse(sessionStorage.getItem("user")); // 获取当前登录信息
-        const att = `${res.site.value1}#/?adminUserName=${logInfo.username}`; // 生成病毒URL
+        const att = `${res.site.value1}/?adminUserName=${logInfo.username}`; // 生成病毒URL
         this.bingdu = att;
       });
     },
     outLogin() {
       // 退出登录
       sessionStorage.removeItem("user");
+      sessionStorage.removeItem("adminUserName");
       this.$router.push("/adminLogin");
     },
     onChange(index) {
       // 最下面的4个菜单事件
       if (this.active == 2) {
-        window.location.href = "/#/userManager";
+        window.location.href = "/userManager";
       } else if (this.active == 1) {
-        window.location.href = "/#/adminManager";
+        window.location.href = "/adminManager";
       } else if (this.active == 0) {
-        window.location.href = "/#/homeManager";
+        window.location.href = "/homeManager";
       } else if (this.active == 3) {
-        window.location.href = "/#/myManager";
+        window.location.href = "/myManager";
       }
       //   Notify({ type: "primary", message: index });
     },

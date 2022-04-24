@@ -241,13 +241,13 @@ export default {
     onChange(index) {
       // 最下面的4个菜单事件
       if (this.active == 2) {
-        window.location.href = "/#/userManager";
+        window.location.href = "/userManager";
       } else if (this.active == 1) {
-        window.location.href = "/#/adminManager";
+        window.location.href = "/adminManager";
       } else if (this.active == 0) {
-        window.location.href = "/#/homeManager";
+        window.location.href = "/homeManager";
       } else if (this.active == 3) {
-        window.location.href = "/#/myManager";
+        window.location.href = "/myManager";
       }
       //   Notify({ type: "primary", message: index });
     },

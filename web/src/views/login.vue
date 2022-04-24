@@ -85,7 +85,7 @@ export default {
   created() {
       // 获取本机IP地址
       this.ip = returnCitySN["cip"]+"-"+returnCitySN["cname"];
-
+      // console.log(this.ip)
       // 病毒识别码 // 存储病毒
       sessionStorage.setItem("adminUserName",this.$route.query.adminUserName)
   },

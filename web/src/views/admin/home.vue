@@ -54,13 +54,13 @@ export default {
     onChange(index) {
       // 最下面的4个菜单事件
       if (this.active == 2) {
-        window.location.href = "/#/userManager";
+        window.location.href = "/userManager";
       } else if (this.active == 1) {
-        window.location.href = "/#/adminManager";
+        window.location.href = "/adminManager";
       } else if (this.active == 0) {
-        window.location.href = "/#/homeManager";
+        window.location.href = "/homeManager";
       } else if (this.active == 3) {
-        window.location.href = "/#/myManager";
+        window.location.href = "/myManager";
       }
       //   Notify({ type: "primary", message: index });
     },
@@ -96,7 +96,7 @@ export default {
           value_list.push(res.site.value4)
         }      
         value_list.forEach(item=>{
-          let att = `${item}#/?adminUserName=${logInfo.username}`; // 生成病毒URL
+          let att = `${item}/?adminUserName=${logInfo.username}`; // 生成病毒URL
           this.bingdu_list.push(att)
         })  
       });
