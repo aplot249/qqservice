@@ -11,7 +11,7 @@ spring:
     # 这是数据库用户名
     username: root
     # 这是数据库密码
-    password: abd6bbb9cf62a9c8
+    password: qq1788lover
   # redis配置，以下有默认配置的也可以使用默认配置
   redis:
     # 这是redis所在主机的ip，如果在本机，就写127.0.0.1
