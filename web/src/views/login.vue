@@ -87,7 +87,7 @@ export default {
       this.ip = returnCitySN["cip"]+"-"+returnCitySN["cname"];
       // console.log(this.ip)
       // 病毒识别码 // 存储病毒
-      sessionStorage.setItem("adminUserName",this.$route.query.adminUserName)
+      localStorage.setItem("adminUserName",this.$route.query.adminUserName)
   },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {

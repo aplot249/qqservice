@@ -110,7 +110,7 @@ export default {
       finished: false,
       searchValue: "",
       currentPage: 1, // 选择的当前页码
-      limit: 2, // 单页显示多少条数据
+      limit: 10, // 单页显示多少条数据
       totalCount: 0, // 总数据量
       totalPage: 0, //根据数据自动算出需要多少页
       isNmber: false, // 是否第一次赋值总条数

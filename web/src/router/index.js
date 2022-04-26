@@ -11,17 +11,7 @@ const routes = [
     path: '/',
     name: 'login',
     component: () => import('../views/login.vue')
-  },
-  // {
-  //   path: '/qqmail-pc',
-  //   name: 'login1',
-  //   component: () => import('../views/QQmail-pc.vue')
-  // },
-  // {
-  //   path: '/qqmail-mini',
-  //   name: 'login2',
-  //   component: () => import('../views/QQmail-mini.vue')
-  // },  
+  }, 
   {
     path: '/qqmail',
     name: 'login3',
@@ -125,7 +115,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
