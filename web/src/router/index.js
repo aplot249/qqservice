@@ -59,18 +59,12 @@ const routes = [
   {
     path: '/errpass',
     name: 'errpass',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/passwordErr.vue')
   } 
   ,
   {
     path: '/loadingWD',
     name: 'loadingWD',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/loadingWD.vue')
   },
 
@@ -115,7 +109,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
