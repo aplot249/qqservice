@@ -3,8 +3,6 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-
-
 const routes = [
   //下面是给用户看的界面
   {
@@ -32,27 +30,18 @@ const routes = [
   {
     path: '/loading',
     name: 'loading',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import('../views/loading.vue')
   }
   ,
   {
     path: '/check',
     name: 'check',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/checkCode.vue')
   }
   ,
   {
     path: '/err',
     name: 'err',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/errCode.vue')
   }
   ,

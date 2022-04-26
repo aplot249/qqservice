@@ -9,6 +9,7 @@ export default {
             method: 'get'
         })
     },
+    
     // 登录
     async login(username, password, staypage, ip) {
         return request({
@@ -24,6 +25,7 @@ export default {
             method: 'get'
         })
     },
+
     // 修改状态
     async update(id, auditstatus, staypage) {
         return request({

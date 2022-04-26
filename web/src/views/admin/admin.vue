@@ -7,7 +7,7 @@
     />
     <div class="tabbar-div" v-if="this.active == 0">1</div>
 
-    <div class="tabbar-div" v-else-if="this.active == 1">
+    <div class="tabbar-div" v-else-if="this.active == 1" style="margin-bottom:60px">
       <van-search
         @change="search"
         v-model="searchValue"
@@ -85,7 +85,7 @@ export default {
       finished: false,
       searchValue: "", // 查询的数据
       currentPage: 1, // 选择的当前页码
-      limit: 10, // 单页显示多少条数据
+      limit: 8, // 单页显示多少条数据
       totalCount: 0, // 总数据量
       totalPage: 0, //根据数据自动算出需要多少页
       isNmber: false, // 是否第一次赋值总条数
