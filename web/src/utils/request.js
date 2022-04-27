@@ -22,7 +22,9 @@ service.interceptors.request.use(
     },
     err => {
         return Promise.reject(err)
-    })
+    }
+)
+
 // http response 拦截器
 service.interceptors.response.use(
     response => {
@@ -50,4 +52,5 @@ service.interceptors.response.use(
     error => {
         return Promise.reject(error.response)
     })
+
 export default service

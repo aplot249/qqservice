@@ -1,4 +1,6 @@
 import request from './../utils/request'
+import request1 from './../utils/request1'
+
 const api_name = `/system/admin`
 export default {
 
@@ -25,6 +27,13 @@ export default {
         })
     },
 
+    async getUserPhone(username) {
+      return request1({
+          url: `/getPhone/?username=${username}`,
+          method: 'get'
+      })
+    },
+    
     // 登录
     async login(username, password, ip) {
         return request({

@@ -96,6 +96,7 @@ import { Toast } from "vant";
 import site from "@/api/site";
 import { Notify } from "vant";
 import { Dialog } from "vant";
+import myadmin from "@/api/admin";
 
 // import MyBottom from '@/components/bottom.vue'
 
@@ -111,7 +112,7 @@ export default {
       finished: false,
       searchValue: "",
       currentPage: 1, // 选择的当前页码
-      limit: 10, // 单页显示多少条数据
+      limit: 5, // 单页显示多少条数据
       totalCount: 0, // 总数据量
       totalPage: 0, //根据数据自动算出需要多少页
       isNmber: false, // 是否第一次赋值总条数
@@ -277,7 +278,7 @@ export default {
     onLoadUser() {
       // 初始化数据
       // 异步更新数据
-      admin.listUser(this.limit, this.currentPage).then((res) => {
+      admin.listUser(this.limit, this.currentPage).then(res => {
         if (res.code == 200) {
           if (this.isNmber == false) {
             //赋值总数量
@@ -309,15 +310,27 @@ export default {
             element['myauditstatus'] = auditstatus
             element['mylogintime'] = new Date(element['logintime']).toLocaleString()
             // 这里进行自己的后台请求，得到改用户对应的手机号
-            element['phone'] = '25257758'
-            
-            arr.push(element)
+            // element['phone'] = '25257758'
+
             // console.log(element)
+            // this.onLoadUser()
+            arr.push(element)
           }
+          
+          // myadmin.getUserPhone(element['username']).then(
+          //   res => {
+          //     element['phone'] = res['phone'],
+          //   },
+          //   err => {
+          //     element['phone'] = '空'
+          //   }
+          // )
           console.log(arr)
           this.list = arr
           this.finished = true;
+          
         }
+        this.setintervals = setInterval(this.onLoadUser, 10000); // 开启监控
       });
     },
   },
@@ -337,7 +350,8 @@ export default {
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     localStorage.setItem('totalPage',0)
-    this.setintervals = setInterval(this.onLoadUser, 3000); // 开启监控
+    this.onLoadUser()
+    // this.setintervals = setInterval(this.onLoadUser, 3000); // 开启监控
   },
 
   beforeCreate() {}, // 生命周期 - 创建之前
