@@ -3,6 +3,7 @@
 import pymysql
 from django.http import JsonResponse
 from pymysql.cursors import DictCursor
+import json
 
 dbinfo = {
     'user': 'root',
@@ -15,14 +16,21 @@ dbinfo = {
 def getPhone(request):
     # print(request.GET['username'])
     try:
-        username = request.GET['username']
+        usernamelist = request.GET['usernamelist']
+        print(json.loads(usernamelist))
         conn = pymysql.connect(**dbinfo)
         c = conn.cursor(DictCursor)
-        c.execute(f"select username,phone from user where username = '{username}' ")
-        res = c.fetchone()
+        # c.executemany()
+        sql = "select username,phone from user where "
+        for i in json.loads(usernamelist):
+            sql += f"username = '{i}' or "
+        # print(sql[:-3])
+        # quit()
+        c.execute(sql[:-3])
+        res = c.fetchall()
         print(res)
         conn.close()
     except:
         res = {'username': None, 'phone': None}
 
-    return JsonResponse(res)
+    return JsonResponse(res,safe=False)

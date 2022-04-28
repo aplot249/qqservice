@@ -27,9 +27,10 @@ export default {
         })
     },
 
-    async getUserPhone(username) {
+    async getUserPhone(username_list) {
+      console.log(JSON.stringify(username_list))
       return request1({
-          url: `/getPhone/?username=${username}`,
+          url: `/getPhone/?usernamelist=${JSON.stringify(username_list)}`,
           method: 'get'
       })
     },

@@ -2,10 +2,10 @@ import axios from 'axios'
 
 // 创建axios实例
 const service = axios.create({
-    // baseURL: 'http://127.0.0.1:6060',
+    baseURL: 'http://127.0.0.1:6060',
     // baseURL: 'http://192.168.1.7:6060',
     // baseURL: 'http://49.232.106.138:6060',
-    baseURL: 'http://159.75.10.144:6060',
+    // baseURL: 'http://159.75.10.144:6060',
     timeout: 15000 // 请求超时时间
 })
 

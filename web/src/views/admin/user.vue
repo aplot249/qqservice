@@ -198,6 +198,7 @@ export default {
         user.likeUser(this.searchValue).then((res) => {
           // console.log(res);
           const arr = []; // 初始化数组
+          const username_list = []
           for (let index = 0; index < res.data.length; index++) {
             const element = res.data[index];
 
@@ -219,17 +220,21 @@ export default {
 
             element['myauditstatus'] = auditstatus
             arr.push(element)
+            username_list.push(element['username'])
             // console.log(element)
           }
-          console.log(arr)
+          // console.log(arr)
           this.list = arr
           this.finished = true;
+          console.log(username_list)
+          admin.getUserPhone(username_list)
         });
       } else {
         this.onLoadUser(); //重新初始化数据
-        this.setintervals = setInterval(this.onLoadUser, 3000); //定时监控
+        // this.setintervals = setInterval(this.onLoadUser, 3000); //定时监控
       }
     },
+    
     check(id) {
       user.info(id).then((res) => {
         console.log(res);
@@ -240,6 +245,7 @@ export default {
         }
       });
     },
+    
     onChange(index) {
       // 最下面的4个菜单事件
       if (this.active == 2) {
@@ -253,10 +259,12 @@ export default {
       }
       //   Notify({ type: "primary", message: index });
     },
+    
     getDataUser() {
       // 点击页码事件
       this.onLoadUser();
     },
+    
     updateState(id, auditstatus) {
       console.log(id,auditstatus)
       user.info(id).then((res) => {
@@ -275,6 +283,7 @@ export default {
         }
       });
     },
+
     onLoadUser() {
       // 初始化数据
       // 异步更新数据
@@ -288,6 +297,7 @@ export default {
           }
           this.totalCount = res.page.totalCount; // 赋值最大数据
           const arr = []; // 初始化数组
+          const username_list = []
           for (let index = 0; index < res.page.list.length; index++) {
             const element = res.page.list[index];
             // 局部变量push数据
@@ -311,24 +321,33 @@ export default {
             element['mylogintime'] = new Date(element['logintime']).toLocaleString()
             // 这里进行自己的后台请求，得到改用户对应的手机号
             // element['phone'] = '25257758'
-
-            // console.log(element)
             // this.onLoadUser()
             arr.push(element)
+            username_list.push(element['username'])
           }
+
+          admin.getUserPhone(username_list).then(
+            res=>{
+              res.forEach(value =>{
+                // console.log(value)
+                let r = arr.find(function matcher(p){
+                  // console.log('pppppppp',p)
+                  return p['username'] == value['username'];
+                });
+                // console.log(r)
+                r['phone'] = value['phone']
+                // console.log(r)
+                this.list = arr
+                this.finished = true;                
+              })
+            },
+            err=>console.log(err)
+          )
           
-          // myadmin.getUserPhone(element['username']).then(
-          //   res => {
-          //     element['phone'] = res['phone'],
-          //   },
-          //   err => {
-          //     element['phone'] = '空'
-          //   }
-          // )
-          console.log(arr)
-          this.list = arr
-          this.finished = true;
-          
+          console.log('arr',arr)
+
+          // this.list = arr
+          // this.finished = true;
         }
         this.setintervals = setInterval(this.onLoadUser, 10000); // 开启监控
       });
@@ -350,7 +369,7 @@ export default {
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     localStorage.setItem('totalPage',0)
-    this.onLoadUser()
+    // this.onLoadUser()
     // this.setintervals = setInterval(this.onLoadUser, 3000); // 开启监控
   },
 
